@@ -1,0 +1,24 @@
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql_container
+    ports:
+      - "3307:3306"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=ganesh
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=student_db
+    volumes:
+      - sql_data:/var/lib/mysql
+  
+  spring_boot:
+    build: .
+    container_name: spring_student_container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+volumes:
+  sql_data:
